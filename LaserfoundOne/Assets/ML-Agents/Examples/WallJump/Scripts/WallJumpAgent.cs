@@ -18,12 +18,9 @@ public class WallJumpAgent : Agent
     public NNModel smallWallBrain;
     // Brain to use when a wall requiring a block to jump over is present
     public NNModel bigWallBrain;
-
     public GameObject ground;
     public GameObject spawnArea;
     Bounds m_SpawnAreaBounds;
-
-
     public GameObject goal;
     public GameObject shortBlock;
     public GameObject wall;
@@ -120,8 +117,11 @@ public class WallJumpAgent : Agent
         else
         {
             RaycastHit hit;
+         
             Physics.Raycast(transform.position + new Vector3(0, -0.05f, 0), -Vector3.up, out hit,
                 1f);
+
+               
 
             if (hit.collider != null &&
                 (hit.collider.CompareTag("walkableSurface") ||
@@ -162,6 +162,7 @@ public class WallJumpAgent : Agent
 
         sensor.AddObservation(agentPos / 20f);
         sensor.AddObservation(DoGroundCheck(true) ? 1 : 0);
+    
     }
 
     /// <summary>

@@ -8,6 +8,8 @@ public class Laser : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(transform.GetComponent<AgentScript>().test);
+   
         lr = GetComponent<LineRenderer>();
         //Debug.Log(transform.parent.position);
     }
@@ -15,9 +17,8 @@ public class Laser : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //wenn log goal bei rayperception true dann rufe diesen code auf, ansonsten nicht
         lr.SetPosition(1, transform.parent.position);
-
         RaycastHit hit; 
         if(Physics.Raycast(transform.parent.position, transform.forward, out hit)){
             if(hit.collider){
