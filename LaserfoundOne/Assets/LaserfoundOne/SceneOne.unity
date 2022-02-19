@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 200751972}
   - component: {fileID: 200751974}
   - component: {fileID: 200751973}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 1779699181}
   - component: {fileID: 1779699183}
   - component: {fileID: 1779699182}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Agent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -630,7 +630,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1779699174}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.3, y: 0, z: -12.42}
+  m_LocalPosition: {x: -4.52, y: 0, z: -22.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 200751972}
@@ -653,8 +653,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  HasHit: 0
-  HitFraction: 0
+  test: sssss
 --- !u!114 &1779699180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -668,7 +667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 1
+    VectorObservationSize: 3
     NumStackedVectorObservations: 2
     m_ActionSpec:
       m_NumContinuousActions: 2
@@ -714,8 +713,8 @@ MonoBehaviour:
   m_SensorName: RayPerceptionSensor
   m_DetectableTags:
   - goal
-  m_RaysPerDirection: 10
-  m_MaxRayDegrees: 7
+  m_RaysPerDirection: 0
+  m_MaxRayDegrees: 10
   m_SphereCastRadius: 0.5
   m_RayLength: 20
   m_RayLayerMask:

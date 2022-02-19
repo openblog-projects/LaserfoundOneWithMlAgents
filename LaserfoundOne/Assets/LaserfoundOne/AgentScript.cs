@@ -7,27 +7,15 @@ using Unity.MLAgents.Sensors;
 
 public class AgentScript : Agent{
 
-    public string test = "sssss";
-
-    //[SerializeField] private Transform targetTransform;
-    [SerializeField] public RayPerceptionOutput RayPerceptionOutput { get; }
-    [SerializeField] public RayPerceptionOutput.RayOutput[] RayOutputs;
-
+    public bool checkIfRayHitsObject = false;
     
-    public override void OnEpisodeBegin(){
-        //Debug.Log(test);
-
-
-        Debug.Log(transform.GetComponent<RayPerceptionSensorComponent3D>());
-        //GetRayPerceptionInput();
-
-
+    public override void OnEpisodeBegin()
+    {
         transform.position = Vector3.zero;
-
-       // RayOutputs.GetLength;
     }
 
-     private void RayCastInfo(RayPerceptionSensorComponent3D rayComponent)
+    //helper method to see if goal gets hit from RayPerceptionSensor
+    private void RayCastInfo(RayPerceptionSensorComponent3D rayComponent)
     {
         var rayOutputs = RayPerceptionSensor
                 .Perceive(rayComponent.GetRayPerceptionInput())
@@ -39,62 +27,34 @@ public class AgentScript : Agent{
                     .Perceive(rayComponent.GetRayPerceptionInput())
                     .RayOutputs
                     .Length;
- 
+
             for (int i = 0; i < lengthOfRayOutputs; i++)
             {
                 GameObject goHit = rayOutputs[i].HitGameObject;
                 if (goHit != null)
                 {
-                    Debug.Log(goHit.name);
+                    //am anfang habe ich kein laser (vor erstem hit)
+                    //wenn ein hit dann durchgehend laser
+                    //ich muss checken wann er immer in die erste if rein geht
+                    //bin davon ausgegangen, dass das immer nur dann passiert wenn ray auch wirklich trifft
+                    //set bool true if object gets hit
+                    checkIfRayHitsObject = true;
+                }
+                //set bool for ray doesn't hit goal
+                else
+                {
+                    checkIfRayHitsObject = false;
                 }
             }
         }
     }
 
-    /*void Update() {
-         RaycastHit hit;
-         if (Physics.Raycast(transform.position, -Vector3.up, out hit))
-             hit.transform.SendMessage ("HitByRay");
-         
-     }*/
+    //Agent observations which come with every (frame/updadte)
     public override void CollectObservations(VectorSensor sensor){
-        //this.GetComponent< RayPerceptionSensorComponent3D >().RayPerceptionOutput.RayOutput.HasHit;
-       // RayCastInfo(GetComponent<RayPerceptionSensorComponent3D>());
-        //rayComponent = GetComponent<RayPerceptionSensorComponent3D>();
-        //Debug.Log(RayPerceptionSensor.Perceive(GetComponent<RayPerceptionSensorComponent3D>().GetRayPerceptionInput()).RayOutputs);
-
-
-        //Debug.Log(transform);
-        //RayPerceptionSensorComponent3D;
-        //Debug.Log(GetComponent<RayPerceptionSensorComponent3D>().RayPerceptionOutput.RayOutputs);
-        //Debug.Log(GetComponent<RayPerceptionSensorComponent3D>().Perceive());
-        //Debug.Log(Perceive(transform.GetComponent<RayPerceptionSensorComponent3D>().GetRayPerceptionInput()));
-        //Debug.Log(RayPerceptionOutput.RayOutputs);
-        //Debug.Log(transform.RayPerceptionOutput);
-        //Debug.Log(transform.GetComponent<RayPerceptionSensorComponent3D>().GetRayPerceptionInput().DetectableTags[0]); 
-        //Debug.Log(GetComponent<RayPerceptionSensorComponent3D>().GetRayPerceptionInput().DetectableTags[0]); 
-        //Debug.Log(transform.GetComponent<RayPerceptionSensorComponent3D>().RayPerceptionOutput); 
-        
-        //Auflistung von allen möglichen methoden für raycast Sensor:
-
-        //wenn etwas null wird, dann trifft der ray etwas
-
-        //Debug.Log(HasHit);
-        //Debug.Log(sensor.HitFraction);
-
-        //sensor.AddObservation(hitObject);
-        //sensor.AddObservation(transform.position);
-        //transform.
-        //Debug.Log(sensor);
-        //transform ist mien agent, vielleicht kann ich darauf meine agent methoden aufrufen 
-        //Debug.Log(sensor.transform.position);
-        //Debug.Log(HitFraction);
-        //agent position
-        //sensor.AddObservation(HasHit);
-        //Debug.Log(DetectableTags);
+        RayCastInfo(GetComponent<RayPerceptionSensorComponent3D>());
     }
 
-     //receives either float or int values
+    //gets discrete or continous values for actions
     public override void OnActionReceived(ActionBuffers actions){
         float moveX = actions.ContinuousActions[0];
         float moveZ = actions.ContinuousActions[1];
@@ -107,16 +67,6 @@ public class AgentScript : Agent{
         ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
         continuousActions[0] = Input.GetAxisRaw("Horizontal");
         continuousActions[1] = Input.GetAxisRaw("Vertical");
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("skskksks");
-    }
-
-    private void OnTriggerEnter(Collider other){
-        Debug.Log("AAAA");
-        Debug.Log(other);
     }
 }
 
