@@ -86,6 +86,11 @@ public class AgentScript : Agent
         float moveZ = actions.ContinuousActions[1];
         float moveSpeed = 10f;
         transform.localPosition += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
+
+        //wenn sich das objekt bewegt dann EndEpisode
+        if(checkIfRayMovedGoal == true){
+            EndEpisode();
+        }
     }
 
     //controls the agent with certain keyboard input

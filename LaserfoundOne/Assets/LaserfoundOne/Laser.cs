@@ -60,7 +60,7 @@ public class Laser : MonoBehaviour
                     //get rigidbody of goal
                     goalRigidbody = GameObject.Find("Goal").GetComponent<Rigidbody>();
                     //move goal with force
-                    goalRigidbody.AddForce(0, 0, 1, ForceMode.Impulse);
+                    goalRigidbody.AddForce(0, 0, 10, ForceMode.Impulse);
                     //variable is true if goal was moved
                     agentScript.checkIfRayMovedGoal = true;
                 }
